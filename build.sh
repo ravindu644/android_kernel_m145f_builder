@@ -1,4 +1,5 @@
 #!/bin/bash
+export ANDROID_BUILD_TOP="$(pwd)"
 
 #fetch submodules
 git submodule init && git submodule update
@@ -9,11 +10,13 @@ if [ "$EUID" -ne 0 ]; then
     exec sudo "$0" "$@"
 fi
 
+#clean the out directory
+rm -rf ${ANDROID_BUILD_TOP}/out
+
 # Create a log file and print start time
 echo -e "Build started at: $(date)\n" | tee logs.txt
 
 # OEM Variables
-export ANDROID_BUILD_TOP="$(pwd)"
 export TARGET_BUILD_VARIANT="user"
 export CHIPSET_NAME="sm6225"
 export MODEL="a05s"
@@ -81,6 +84,6 @@ fi
 
 #main execution
 export SKIP_MRPROPER=1
-RECOMPILE_KERNEL=1 kernel_platform/build/android/prepare_vendor.sh sec ${TARGET_PRODUCT} && cp ${ANDROID_BUILD_TOP}/out/msm-sm6225-sm6225-gki/dist/boot.img "${ANDROID_BUILD_TOP}/build"
+RECOMPILE_KERNEL=1 ${ANDROID_BUILD_TOP}/kernel_platform/build/android/prepare_vendor.sh sec ${TARGET_PRODUCT} && cp ${ANDROID_BUILD_TOP}/out/msm-sm6225-sm6225-gki/dist/boot.img "${ANDROID_BUILD_TOP}/build"
 
 echo "[+] Build finished at: $(date)"
