@@ -69,8 +69,15 @@ else
     echo -e "[+] Requirements already installed...\n"      
 fi
 
+#build dir
+if [ ! -d "${ANDROID_BUILD_TOP}/build" ]; then
+    mkdir -p "${ANDROID_BUILD_TOP}/build"
+else
+    rm -rf "${ANDROID_BUILD_TOP}/build" && mkdir -p "${ANDROID_BUILD_TOP}/build"
+fi
+
 #main execution
 export SKIP_MRPROPER=1
-RECOMPILE_KERNEL=1 kernel_platform/build/android/prepare_vendor.sh sec ${TARGET_PRODUCT}
+RECOMPILE_KERNEL=1 kernel_platform/build/android/prepare_vendor.sh sec ${TARGET_PRODUCT} && cp ${ANDROID_BUILD_TOP}/out/msm-sm6225-sm6225-gki/dist/boot.img "${ANDROID_BUILD_TOP}/build/"
 
 echo "[+] Build finished at: $(date)"
