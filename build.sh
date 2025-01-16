@@ -78,6 +78,6 @@ fi
 
 #main execution
 export SKIP_MRPROPER=1
-RECOMPILE_KERNEL=1 kernel_platform/build/android/prepare_vendor.sh sec ${TARGET_PRODUCT} && cp ${ANDROID_BUILD_TOP}/out/msm-sm6225-sm6225-gki/dist/boot.img "${ANDROID_BUILD_TOP}/build/"
+RECOMPILE_KERNEL=1 kernel_platform/build/android/prepare_vendor.sh sec ${TARGET_PRODUCT} && cp ${ANDROID_BUILD_TOP}/out/msm-sm6225-sm6225-gki/dist/boot.img "${ANDROID_BUILD_TOP}/build"
 
 echo "[+] Build finished at: $(date)"
