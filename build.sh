@@ -21,6 +21,9 @@ export TARGET_PRODUCT=gki
 export TARGET_BOARD_PLATFORM=gki
 export MERGE_CONFIG="${ANDROID_BUILD_TOP}/kernel_platform/msm-kernel/scripts/kconfig/merge_config.sh"
 
+#init ksu
+cd kernel_platform/common && git submodule init && git submodule update && cd ${ANDROID_BUILD_TOP}
+
 # Build paths
 export ANDROID_PRODUCT_OUT=${ANDROID_BUILD_TOP}/out/target/product/${MODEL}
 export OUT_DIR=${ANDROID_BUILD_TOP}/out/msm-${CHIPSET_NAME}-${CHIPSET_NAME}-${TARGET_PRODUCT}
