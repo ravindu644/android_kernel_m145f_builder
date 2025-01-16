@@ -14,6 +14,8 @@ else
 fi
 cd "${RDIR}/kernel_platform"
 
-build/_setup_env.sh
-BUILD_CONFIG=msm-kernel/build.config.msm.m269.sec build/config.sh
-LTO=thin build/build.sh
+#kernel_platform/out/msm-kernel-m269-consolidate/gki_kernel/common/.config is the path for final config 
+#HERMETIC_TOOLCHAIN=0 is required for menuconfig to load external libraries
+
+HERMETIC_TOOLCHAIN=0 BUILD_CONFIG=msm-kernel/build.config.msm.m269.sec LTO=thin build/config.sh
+HERMETIC_TOOLCHAIN=0 BUILD_CONFIG=msm-kernel/build.config.msm.m269.sec LTO=thin build/build.sh
