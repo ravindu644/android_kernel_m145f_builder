@@ -13,5 +13,7 @@ else
     echo -e "[+] Toolchain already installed...\n"    
 fi
 cd "${RDIR}/kernel_platform"
+
 build/_setup_env.sh
-LTO=thin BUILD_CONFIG=msm-kernel/build.config.msm.m269.sec build/build.sh
+BUILD_CONFIG=msm-kernel/build.config.msm.m269.sec build/config.sh
+LTO=thin build/build.sh
