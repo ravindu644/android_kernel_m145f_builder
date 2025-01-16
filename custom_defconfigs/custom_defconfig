@@ -9,3 +9,6 @@ CONFIG_KALLSYMS_ALL=y
 
 #disable Defex
 CONFIG_SECURITY_DEFEX=n
+
+#KernelSU-Next
+CONFIG_KSU=y
