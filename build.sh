@@ -60,7 +60,7 @@ if [ ! -d "${ANDROID_BUILD_TOP}/kernel_platform/prebuilts" ]; then
     curl -LO --progress-bar https://github.com/ravindu644/a05s_stock/releases/download/toolchain/toolchain.zip
     curl -LO --progress-bar https://github.com/ravindu644/a05s_stock/releases/download/toolchain/toolchain.z01
     zip -s- toolchain.zip -O combined.zip && unzip combined.zip && rm combined.zip
-    tar -xvf toolchain.tar.gz
+    tar --no-same-owner -xf toolchain.tar.gz
     mv prebuilts "${ANDROID_BUILD_TOP}/kernel_platform" && chmod +x -R "${ANDROID_BUILD_TOP}/kernel_platform/prebuilts"
     rm toolchain*
     sudo apt install rsync > /dev/null 2>&1
