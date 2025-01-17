@@ -865,7 +865,7 @@ echo "========================================================"
 echo " Building kernel"
 
 set -x
-(cd ${OUT_DIR} && make O=${OUT_DIR} ${TOOL_ARGS} menuconfig)
+(cd ${OUT_DIR} && make O=${OUT_DIR} ${TOOL_ARGS} menuconfig || true)
 (cd ${OUT_DIR} && make O=${OUT_DIR} ${TOOL_ARGS} "${MAKE_ARGS[@]}" ${MAKE_GOALS})
 set +x
 
