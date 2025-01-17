@@ -27,6 +27,14 @@ export MERGE_CONFIG="${ANDROID_BUILD_TOP}/kernel_platform/msm-kernel/scripts/kco
 #init ksu
 cd kernel_platform/common && git submodule init && git submodule update && cd ${ANDROID_BUILD_TOP}
 
+#localversion
+if [ -z "$BUILD_KERNEL_VERSION" ]; then
+    export BUILD_KERNEL_VERSION="dev"
+fi
+
+#setting up localversion
+echo -e "CONFIG_LOCALVERSION_AUTO=n\nCONFIG_LOCALVERSION=\"-ravindu644-${BUILD_KERNEL_VERSION}\"\n" > "${ANDROID_BUILD_TOP}/custom_defconfigs/custom_defconfig"
+
 # Build paths
 export ANDROID_PRODUCT_OUT=${ANDROID_BUILD_TOP}/out/target/product/${MODEL}
 export OUT_DIR=${ANDROID_BUILD_TOP}/out/msm-${CHIPSET_NAME}-${CHIPSET_NAME}-${TARGET_PRODUCT}
@@ -86,4 +94,12 @@ fi
 export SKIP_MRPROPER=1
 RECOMPILE_KERNEL=1 ${ANDROID_BUILD_TOP}/kernel_platform/build/android/prepare_vendor.sh sec ${TARGET_PRODUCT} && cp ${ANDROID_BUILD_TOP}/out/msm-sm6225-sm6225-gki/dist/boot.img "${ANDROID_BUILD_TOP}/build"
 
+#build odin flashable tar
+build_tar(){
+    cd ${ANDROID_BUILD_TOP}/build
+    tar -cvf "KernelSU-Next-SM-M145F-${BUILD_KERNEL_VERSION}.tar" boot.img && rm boot.img
+    echo -e "\n[i] Build Finished..!\n" && cd ${ANDROID_BUILD_TOP}
+} 
+
+build_tar
 echo "[+] Build finished at: $(date)"
