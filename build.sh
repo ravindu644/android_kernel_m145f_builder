@@ -4,12 +4,6 @@ export ANDROID_BUILD_TOP="$(pwd)"
 #fetch submodules
 git submodule init && git submodule update
 
-# Check if the script is running with sudo
-if [ "$EUID" -ne 0 ]; then
-    echo -e  "[+] Script is not running with sudo, trying to acquire sudo permissions...\n"
-    exec sudo "$0" "$@"
-fi
-
 #clean the out directory
 rm -rf ${ANDROID_BUILD_TOP}/out
 
