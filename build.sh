@@ -68,15 +68,6 @@ else
     echo -e "[+] Toolchain already installed...\n"  
 fi
 
-# requirements
-if [ ! -f .requirements ]; then
-    echo -e "[+] Installing Requirements...\n"
-    sudo apt update -y ; sudo apt install default-jdk git-core gnupg flex bison gperf build-essential zip curl libc6-dev libncurses5-dev x11proto-core-dev libx11-dev libreadline6-dev libgl1-mesa-glx libgl1-mesa-dev python3 make sudo gcc g++ bc grep tofrodos python3-markdown libxml2-utils xsltproc zlib1g-dev libncurses5 python-is-python3 libc6-dev libtinfo5 ncurses-dev make python2 cpio kmod openssl libelf-dev dwarves libssl-dev libelf-dev -y
-    echo 1 > .requirements
-else
-    echo -e "[+] Requirements already installed...\n"      
-fi
-
 #build dir
 if [ ! -d "${ANDROID_BUILD_TOP}/build" ]; then
     mkdir -p "${ANDROID_BUILD_TOP}/build"
@@ -86,7 +77,9 @@ fi
 
 #main execution
 export SKIP_MRPROPER=1
-RECOMPILE_KERNEL=1 ${ANDROID_BUILD_TOP}/kernel_platform/build/android/prepare_vendor.sh sec ${TARGET_PRODUCT} && cp ${ANDROID_BUILD_TOP}/out/msm-sm6225-sm6225-gki/dist/boot.img "${ANDROID_BUILD_TOP}/build"
+
+RECOMPILE_KERNEL=1 ${ANDROID_BUILD_TOP}/kernel_platform/build/android/prepare_vendor.sh sec ${TARGET_PRODUCT} || exit 1 && \
+cp ${ANDROID_BUILD_TOP}/out/msm-sm6225-sm6225-gki/dist/boot.img "${ANDROID_BUILD_TOP}/build" || exit 1
 
 #build odin flashable tar
 build_tar(){
